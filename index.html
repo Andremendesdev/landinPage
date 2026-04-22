@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Velas Artesanais | Premium</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,400&family=Montserrat:wght@300;400;500&display=swap" rel="stylesheet">
+
+    <style>
+        /* =========================================
+           VARIÁVEIS DE CORES & CONFIGURAÇÕES GERAIS
+           ========================================= */
+        :root {
+            --bg-color: #FCFBF9; /* Branco/Bege muito suave */
+            --nude-light: #F4EFEA;
+            --gold-accent: #C5A880; /* Dourado suave */
+            --text-dark: #332F2A; /* Quase preto, mais quente */
+            --text-light: #7A736E; /* Cinza quente/marrom suave */
+            
+            --font-title: 'Cormorant Garamond', serif;
+            --font-text: 'Montserrat', sans-serif;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-dark);
+            font-family: var(--font-text);
+            line-height: 1.6;
+            overflow-x: hidden;
+            background-image: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100' height='100' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E"); /* Textura leve e elegante */
+        }
+
+        h1, h2, h3, .quote {
+            font-family: var(--font-title);
+            font-weight: 400;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        img {
+            max-width: 100%;
+            display: block;
+        }
+
+        /* =========================================
+           ANIMAÇÕES DE SCROLL (JS CLASS)
+           ========================================= */
+        .reveal {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: all 1s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* =========================================
+           HERO SECTION (TOPO)
+           ========================================= */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 2rem;
+            position: relative;
+        }
+
+        .hero-subtitle {
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 4px;
+            color: var(--gold-accent);
+            margin-bottom: 1.5rem;
+            font-weight: 500;
+        }
+
+        .hero-title {
+            font-size: clamp(3rem, 6vw, 5rem);
+            line-height: 1.1;
+            margin-bottom: 2rem;
+            color: var(--text-dark);
+        }
+
+        .hero-image-wrapper {
+            width: 100%;
+            max-width: 600px;
+            height: 400px;
+            overflow: hidden;
+            border-radius: 4px 4px 100px 4px; /* Toque assimétrico moderno */
+            margin-bottom: 3rem;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.05);
+        }
+
+        .hero-image-wrapper img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 1.5s ease;
+        }
+
+        .hero-image-wrapper:hover img {
+            transform: scale(1.05);
+        }
+
+        .btn-primary {
+            display: inline-block;
+            background-color: var(--text-dark);
+            color: var(--bg-color);
+            padding: 1rem 2.5rem;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            border: 1px solid var(--text-dark);
+            transition: all 0.4s ease;
+            cursor: pointer;
+        }
+
+        .btn-primary:hover {
+            background-color: transparent;
+            color: var(--text-dark);
+        }
+
+        /* =========================================
+           QUOTE SECTION (FRASE DESTAQUE)
+           ========================================= */
+        .quote-section {
+            padding: 6rem 2rem;
+            text-align: center;
+            background-color: var(--nude-light);
+        }
+
+        .quote {
+            font-size: clamp(2rem, 4vw, 3rem);
+            font-style: italic;
+            max-width: 800px;
+            margin: 0 auto;
+            color: var(--text-dark);
+            line-height: 1.4;
+        }
+
+        .quote::before, .quote::after {
+            content: "✦";
+            display: block;
+            font-size: 1.5rem;
+            color: var(--gold-accent);
+            margin: 1.5rem auto;
+            font-style: normal;
+        }
+
+        /* =========================================
+           HIGHLIGHTS (DESTAQUES)
+           ========================================= */
+        .highlights {
+            padding: 6rem 2rem;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 3rem;
+            max-width: 1200px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .highlight-item h3 {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+            color: var(--gold-accent);
+        }
+
+        .highlight-item p {
+            font-size: 0.9rem;
+            color: var(--text-light);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* =========================================
+           SOBRE (ABOUT)
+           ========================================= */
+        .about {
+            padding: 5rem 2rem;
+            max-width: 800px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .about h2 {
+            font-size: 2.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .about p {
+            font-size: 1.1rem;
+            color: var(--text-light);
+            line-height: 1.8;
+        }
+
+        /* =========================================
+           GALERIA (GRID)
+           ========================================= */
+        .gallery {
+            padding: 2rem 2rem 8rem 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .gallery-item {
+            overflow: hidden;
+            position: relative;
+            aspect-ratio: 4/5;
+            cursor: pointer;
+        }
+
+        .gallery-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.8s ease, filter 0.8s ease;
+            filter: brightness(0.95);
+        }
+
+        .gallery-item:hover img {
+            transform: scale(1.08);
+            filter: brightness(1);
+        }
+
+        /* =========================================
+           BOTÃO FLUTUANTE WHATSAPP
+           ========================================= */
+        .whatsapp-float {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background-color: var(--bg-color);
+            color: var(--text-dark);
+            border: 1px solid var(--gold-accent);
+            padding: 12px 24px;
+            border-radius: 50px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+            z-index: 1000;
+            transition: all 0.3s ease;
+            font-size: 0.9rem;
+            font-weight: 500;
+            letter-spacing: 1px;
+        }
+
+        .whatsapp-float:hover {
+            transform: translateY(-5px);
+            background-color: var(--nude-light);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.12);
+        }
+
+        .whatsapp-float svg {
+            width: 20px;
+            height: 20px;
+            fill: var(--gold-accent);
+        }
+
+        /* =========================================
+           RODAPÉ
+           ========================================= */
+        footer {
+            text-align: center;
+            padding: 3rem 2rem;
+            border-top: 1px solid var(--nude-light);
+            color: var(--text-light);
+            font-size: 0.85rem;
+        }
+
+        /* =========================================
+           RESPONSIVIDADE
+           ========================================= */
+        @media (max-width: 768px) {
+            .highlights {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+            .hero-image-wrapper {
+                height: 300px;
+            }
+            .whatsapp-float {
+                bottom: 20px;
+                right: 20px;
+                padding: 10px 20px;
+            }
+            .whatsapp-float span {
+                display: none; /* Esconde o texto no mobile para ficar mais discreto, mantendo só o ícone */
+            }
+            .whatsapp-float {
+                border-radius: 50%;
+                padding: 15px;
+            }
+            .whatsapp-float svg {
+                width: 24px;
+                height: 24px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <header class="hero">
+        <p class="hero-subtitle reveal">Cera de coco • Feitas à mão • @barbaramendesvelas</p>
+        <h1 class="hero-title reveal">Luz que perfuma,<br>fé que aquece</h1>
+        
+        <div class="hero-image-wrapper reveal">
+            <img src="img/vela3.png" alt="Vela artesanal luxuosa">
+        </div>
+
+        <a href="#encomendar" class="btn-primary reveal">Fazer pedido no WhatsApp</a>
+    </header>
+
+    <section class="quote-section">
+        <p class="quote reveal">Onde a chama revela fé, e o perfume inspira amor.</p>
+    </section>
+
+    <section class="highlights">
+        <div class="highlight-item reveal">
+            <h3>Pura</h3>
+            <p>Cera de coco</p>
+        </div>
+        <div class="highlight-item reveal">
+            <h3>Artesanal</h3>
+            <p>Feitas à mão</p>
+        </div>
+        <div class="highlight-item reveal">
+            <h3>Essência</h3>
+            <p>Aromas exclusivos</p>
+        </div>
+        <div class="highlight-item reveal">
+            <h3>Memória</h3>
+            <p>Perfeitas para presentear</p>
+        </div>
+    </section>
+
+    <section class="about reveal">
+        <h2>A Alma da Nossa Chama</h2>
+        <p>Cada vela é mais do que cera e pavio; é um ritual de reconexão. Criadas artesanalmente com paciência, amor e propósito, nossas velas utilizam matérias-primas nobres para proporcionar uma queima limpa e um perfume que abraça o ambiente. Transforme seus momentos de silêncio em instantes de pura espiritualidade e aconchego.</p>
+    </section>
+
+    <section class="gallery">
+        <div class="gallery-grid">
+            <div class="gallery-item reveal"><img src="img/vela2.png" alt="Vela 1"></div>
+            <div class="gallery-item reveal"><img src="img/vela1.png" alt="Vela 2"></div>
+            <div class="gallery-item reveal"><img src="img/vela4.png" alt="Vela 3"></div>
+            <div class="gallery-item reveal"><img src="img/vela5.png" alt="Vela 4" style="filter: hue-rotate(20deg) brightness(0.9);"></div>
+        </div>
+    </section>
+
+    <footer>
+        <p>&copy; 2026 Velas Artesanais. Todos os direitos reservados. Feito com amor.</p>
+    </footer>
+
+    <a href="https://wa.me/SEUNUMERO?text=Olá!%20Gostaria%20de%20saber%20mais%20sobre%20as%20velas." target="_blank" class="whatsapp-float">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
+            <path d="M380.9 97.1C339 55.1 283.2 32 223.9 32c-122.4 0-222 99.6-222 222 0 39.1 10.2 77.3 29.6 111L0 480l117.7-30.9c32.4 17.7 68.9 27 106.1 27h.1c122.3 0 224.1-99.6 224.1-222 0-59.3-25.2-115-67.1-157zM223.9 413.6c-33.6 0-66.5-9-95.2-26l-6.8-4-70.8 18.6 18.9-69-4.4-7c-18.7-29.7-28.6-64.2-28.6-99.6 0-101.4 82.5-184 184-184 54 0 104.7 21 142.9 59.2 38.1 38.1 59.1 88.8 59.1 143 0 101.4-82.5 184-184.2 184h-.1zm101.2-138.2c-5.5-2.8-32.8-16.2-37.9-18-5.1-1.9-8.8-2.8-12.5 2.8-3.7 5.6-14.3 18-17.6 21.8-3.2 3.7-6.5 4.2-12 1.4-32.6-16.3-54-29.1-75.5-66-5.7-9.8 5.7-9.1 16.3-30.3 1.8-3.7.9-6.9-.5-9.7-1.4-2.8-12.5-30.1-17.1-41.2-4.5-10.8-9.1-9.3-12.5-9.5-3.2-.2-6.9-.2-10.6-.2-3.7 0-9.7 1.4-14.8 6.9-5.1 5.6-19.4 19-19.4 46.3 0 27.3 19.9 53.7 22.6 57.4 2.8 3.7 39.1 59.7 94.8 83.8 35.2 15.2 49 16.5 66.6 13.9 10.7-1.6 32.8-13.4 37.4-26.4 4.6-13 4.6-24.1 3.2-26.4-1.3-2.5-5-3.9-10.5-6.6z"/>
+        </svg>
+        <span>Peça agora</span>
+    </a>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const reveals = document.querySelectorAll('.reveal');
+
+            const revealOnScroll = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('active');
+                        // Descomente a linha abaixo se quiser que a animação aconteça apenas uma vez
+                        // observer.unobserve(entry.target); 
+                    }
+                });
+            }, {
+                threshold: 0.15 // Define que 15% do elemento precisa estar visível para animar
+            });
+
+            reveals.forEach(reveal => {
+                revealOnScroll.observe(reveal);
+            });
+        });
+    </script>
+
+</body>
+</html>
